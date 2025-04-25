@@ -19,9 +19,9 @@ export async function POST(req: NextRequest) {
             clerkId: id,
             email: email_addresses[0].email_address,
             photo: image_url,
-            firstName: first_name!,
-            lastName: last_name!,
-            username: username!,
+            firstName: first_name || '',
+            lastName: last_name || '',
+            username: username || '',
         }
 
         const newUser = await createUser(user)

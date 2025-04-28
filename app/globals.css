@@ -2,6 +2,9 @@
 @import "tailwindcss" important;
 @import "tw-animate-css";
 
+@import "uploadthing/tw/v4";
+@source "../node_modules/@uploadthing/react/dist"; 
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
@@ -197,7 +200,7 @@
   @apply flex justify-between items-center;
 }
 
-bg-dotted-pattern {
+.bg-dotted-pattern {
   background-image: url('/assets/images/dotted-pattern.png');
   background-repeat: repeat;
 }

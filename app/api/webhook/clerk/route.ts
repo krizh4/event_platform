@@ -13,8 +13,7 @@ export async function POST(req: NextRequest) {
     
     if (eventType === 'user.created') {
         const {id, email_addresses, image_url, first_name, last_name, username} = evt.data
-        console.log(`User created with ID: ${id}`)
-
+        
         const user = {
             clerkId: id,
             email: email_addresses[0].email_address,
@@ -25,6 +24,7 @@ export async function POST(req: NextRequest) {
         }
 
         const newUser = await createUser(user)
+        console.log(`User Created with ID: ${id}`)
 
         if (newUser) {
             await (await clerkClient()).users.updateUserMetadata(id, {
@@ -39,7 +39,6 @@ export async function POST(req: NextRequest) {
     
     if (eventType === 'user.updated') {
         const {id, image_url, first_name, last_name, username} = evt.data
-        console.log(`User created with ID: ${id}`)
 
         const user = {
             photo: image_url,
@@ -49,6 +48,7 @@ export async function POST(req: NextRequest) {
         }
 
         const updatedUser = await updateUser(id, user);
+        console.log(`User Updated with ID: ${id}`)
 
         return NextResponse.json({ message: 'OK, User Updated!', user: updatedUser })
     }
@@ -56,13 +56,13 @@ export async function POST(req: NextRequest) {
     if (eventType === 'user.deleted') {
 
         const { id } = evt.data
-        console.log(`User created with ID: ${id}`)
 
         const deletedUser = await deleteUser(id!);
 
         if (!deletedUser) {
             throw new Error("User deletion failed");
         }
+        console.log(`User Deleted with ID: ${id}`)
 
         return NextResponse.json({ message: 'OK, User Deleted!', user: deletedUser })
     }

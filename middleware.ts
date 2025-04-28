@@ -15,8 +15,11 @@ const isIgnored = createRouteMatcher([
   '/api/uploadthing'
 ])
 
+const isProtectedRoute = createRouteMatcher([
+  '/events/create'
+])
 export default clerkMiddleware(async (auth, req) => {
-  if (!isPublicRoute(req)) {
+  if (!isPublicRoute(req) || isProtectedRoute(req)) {
     await auth.protect()
   }
 })

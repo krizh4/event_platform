@@ -31,6 +31,7 @@
     "react-hook-form": "^7.56.1",
     "svix": "^1.64.1",
     "tailwind-merge": "^3.2.0",
+    "uploadthing": "^7.6.0",
     "zod": "^3.24.3"
   },
   "devDependencies": {

@@ -12,7 +12,7 @@ export const eventFormSchema = z.object({
     }),
     location: z.string().min(3, { message: 'Location is required' }).max(400, {message: "Location must be less than 400 characters"}),
     categoryId: z.string(),
-    prize: z.string(),
+    price: z.string(),
     isFree: z.boolean(),
-    url: z.string().url({ message: 'Invalid URL' }).optional(),
+    url: z.string().url({ message: 'Invalid URL' }),
   })

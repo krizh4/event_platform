@@ -18,8 +18,10 @@ import {
 } from "@/components/ui/alert-dialog";
 
 import { ICategory } from "@/lib/database/models/category.model";
-import { startTransition, useState } from "react";
+import { startTransition, useEffect, useState } from "react";
 import { Input } from "../ui/input";
+import { createCategory, getAllCategories } from "@/lib/actions/category.actions";
+import { set } from "mongoose";
 
 type DropdownProps = {
   value: string;
@@ -30,13 +32,30 @@ const Dropdown = ({ value, onChangeHandler }: DropdownProps) => {
   const [categories, setCategories] = useState<ICategory[]>([]);
   const [newCategory, setNewCategory] = useState('')
 
-  const handleAddCategory = () => {
 
+  // Handleing adding a new category
+  const handleAddCategory = () => {
+    createCategory({ categoryName: newCategory.trim() })
+      .then((category) => {
+        setCategories((prevState) => [...prevState, category]);
+      })
   }
+
+  // Fetching all categories
+  useEffect(() => {
+    const getCategories = async () => {
+      const categoryList = await getAllCategories();
+
+      categoryList && setCategories(categoryList as ICategory[]);
+    }
+
+    getCategories();
+  }, [])
+  
 
   return (
     <Select onValueChange={onChangeHandler} defaultValue={value}>
-      <SelectTrigger className="select-field w-full">
+      <SelectTrigger className="w-full bg-gray-50 h-[54px] placeholder:text-gray-500 rounded-full p-regular-16 px-5 py-3 border-none focus-visible:ring-transparent focus:ring-transparent w-full ">
         <SelectValue placeholder="Category" />
       </SelectTrigger>
       <SelectContent>
